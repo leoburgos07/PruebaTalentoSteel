@@ -1,10 +1,28 @@
 const { Router } = require('express');
 const router = Router();
+const editorialesController = require('../controllers/editorialesController');
+const autoresController = require('../controllers/autoresController');
+const librosController  = require('../controllers/librosController');
 
-router.get('/', (req,res) => {
-    res.json({
-        'Title' : 'Hola leonardo'
-    });
-})
+//Rutas
+//Listar
+router.get('/editoriales', editorialesController.listarEditoriales);
+router.get('/autores', autoresController.listarAutores);
+router.get('/libros', librosController.listarLibros);
+
+//Crear
+router.post('/editoriales', editorialesController.crearEditorial);
+router.post('/autores', autoresController.crearAutor);
+router.post('/libros',librosController.crearLibro);
+
+//Buscar por ID 
+router.get('/buscarEditorial/:id' , editorialesController.showEditorial);
+router.get('/buscarLibro/:id', librosController.showLibro);
+router.get('/buscarAutor/:id', autoresController.showAutor);
+
+//Editar
+
 
 module.exports = router;
+
+
