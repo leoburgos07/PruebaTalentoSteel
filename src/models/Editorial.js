@@ -5,7 +5,7 @@ const EditorialSchema = new Schema({
     direccion : { type : String , required :true },
     telefono : { type : String , required : true }, 
     email : { type : String , required : true , unique:true, lowercase: true },
-    maxLibrosRegistrados : { type : Number , required : true }
+    maxLibrosRegistrados : { type : Number , required : false, default : -1 }
 },{
     timestamps: {createdAt: true, updatedAt: true}
 });

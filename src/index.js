@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views' , path.join(__dirname, 'views'));
 
 
-app.use(require('./routes/index'));
+app.use('/api', require('./routes/index'));
 
 app.listen(process.env.PORT, ()=>{
     console.log(`Servidor en linea`)

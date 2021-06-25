@@ -47,9 +47,28 @@ const showEditorial = async (req, res, next ) => {
         });   
     }
 }
+const editEditorial = async(req,res) => {
+    try {
+        const {id} = req.params;
+        const editorial = await Editorial.findOneAndUpdate(
+            id,
+            req.body,
+            {new : true}
+        );
+        res.json({
+            msg : "Editorial actualizada correctamente!"
+        });
+
+    } catch (e) {
+        res.status(400).json({
+            msg : "Error de peticion"
+        }); 
+    }
+}
 
 module.exports = {
     crearEditorial,
     listarEditoriales,
-    showEditorial
+    showEditorial,
+    editEditorial
 }

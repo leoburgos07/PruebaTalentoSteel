@@ -48,11 +48,30 @@ const showAutor = async (req, res,) => {
         });   
     }
 }
+const editAutor = async(req,res) => {
+    try {
+        const {id} = req.params;
+        const autor = await Autor.findOneAndUpdate(
+            id,
+            req.body,
+            {new : true}
+        );
+        res.json({
+            msg : "Autor actualizado correctamente"
+        });
+    } catch (e) {
+        res.status(400).json({
+            msg : "Error de peticion"
+        }); 
+    }
+}
+
 
 
 
 module.exports = {
     listarAutores,
     crearAutor,
-    showAutor
+    showAutor,
+    editAutor
 }
