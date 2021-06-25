@@ -65,7 +65,30 @@ const editAutor = async(req,res) => {
         }); 
     }
 }
+const deleteAutor = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const autor = await Autor.findById(id);
 
+        if(!autor){
+            res.status(404).json({
+                msg : "El autor no existe."
+            })
+        }
+         
+       const eliminado =  await Autor.findByIdAndDelete(id);
+
+        res.status(200).json({
+            msg : "El autor ha sido eliminado exitosamente",
+            autor : eliminado
+        });
+
+} catch (e) {
+        res.status(400).json({
+            msg : "Error de peticion"
+        });
+    }
+}
 
 
 
@@ -73,5 +96,6 @@ module.exports = {
     listarAutores,
     crearAutor,
     showAutor,
-    editAutor
+    editAutor,
+    deleteAutor
 }

@@ -6,7 +6,6 @@ const listarLibros = async (req, res) =>{
     try{
         const libros = await Libro.find();
         res.status(libros.length === 0 ? 404 : 200).json({
-            ok: true,
             libros
           });
     }catch(err){
@@ -18,23 +17,21 @@ const listarLibros = async (req, res) =>{
 }
 
 const crearLibro = async(req, res) => {
-    // 
-    //         
-    
+
     try {
             const libro = new Libro(req.body);
             const {autor, editorial} = req.body;
             const registroAutor = await Autor.findById(autor);
             const registroEditorial = await Editorial.findById(editorial);
             if(!registroAutor){
-                return res.json({
+                return res.status(400).json({
                     msg : "“El autor no está registrado",
-                    ok : false
+                    
                 });
             }else if(!registroEditorial){
-                return res.json({
+                return res.status(400).json({
                     msg : "La editorial no está registrada",
-                    ok : false
+                   
                 });
             }
             const libros = await Libro.find();
@@ -42,11 +39,11 @@ const crearLibro = async(req, res) => {
 
             console.log(registroEditorial)
             if(cantLibros.length  >= registroEditorial.maxLibrosRegistrados){
-                return res.json({
+                return res.status(400).json({
                     msg : "No es posible registrar el libro, se alcanzó el máximo permitido",
-                    ok : false
+                   
                 })
-            }
+            };
             
             await libro.save()
             res.json({
@@ -93,11 +90,36 @@ const editLibro = async (req, res) => {
         }); 
     }
 }
+const deleteLibro = async (req, res) => {
+    try {
+            const {id} = req.params;
+            const libro = await Libro.findById(id);
+
+            if(!libro){
+                res.status(404).json({
+                    msg : "El libro no existe."
+                })
+            }
+             
+           const eliminado =  await Libro.findByIdAndDelete(id);
+
+            res.status(200).json({
+                msg : "El libro ha sido eliminado exitosamente",
+                libro : eliminado
+            });
+
+    } catch (e) {
+        res.status(400).json({
+            msg : "Error de peticion!"
+        });
+    }
+}
 
 
 module.exports = {
     listarLibros,
     crearLibro,
     showLibro,
-    editLibro
+    editLibro,
+    deleteLibro
 }

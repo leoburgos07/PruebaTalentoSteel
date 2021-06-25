@@ -1,30 +1,35 @@
 const { Router } = require('express');
 const router = Router();
-const {listarEditoriales, crearEditorial, showEditorial, editEditorial} = require('../controllers/editorialesController');
-const {listarAutores, crearAutor, showAutor, editAutor} = require('../controllers/autoresController');
-const {listarLibros, crearLibro, showLibro, editLibro}  = require('../controllers/librosController');
+const editorialesController = require('../controllers/editorialesController');
+const autoresController = require('../controllers/autoresController');
+const librosController  = require('../controllers/librosController');
 
 
 //Rutas
 //Listar
-router.get('/editoriales' , listarEditoriales);
-router.get('/autores', listarAutores);
-router.get('/libros', listarLibros);
+router.get('/editoriales' , editorialesController.listarEditoriales);
+router.get('/autores', autoresController.listarAutores);
+router.get('/libros', librosController.listarLibros);
 
 //Crear
-router.post('/editoriales', crearEditorial);
-router.post('/autores', crearAutor);
-router.post('/libros', crearLibro);
+router.post('/editoriales', editorialesController.crearEditorial);
+router.post('/autores', autoresController.crearAutor);
+router.post('/libros', librosController.crearLibro);
 
 //Buscar por ID 
-router.get('/buscarEditorial/:id' , showEditorial);
-router.get('/buscarLibro/:id', showLibro);
-router.get('/buscarAutor/:id', showAutor);
+router.get('/buscarEditorial/:id' , editorialesController.showEditorial);
+router.get('/buscarLibro/:id', librosController.showLibro);
+router.get('/buscarAutor/:id', autoresController.showAutor);
 
 //Editar
-router.put('/editarEditorial/:id' , editEditorial);
-router.put('/editarLibro/:id' , editLibro);
-router.put('/editarAutor/:id' , editAutor);
+router.put('/editarEditorial/:id' , editorialesController.editEditorial);
+router.put('/editarLibro/:id' , librosController.editLibro);
+router.put('/editarAutor/:id' , autoresController.editAutor);
+
+//Eliminar
+router.delete('/eliminarEditorial/:id', editorialesController.deleteEditorial);
+router.delete('/eliminarAutor/:id' , autoresController.deleteAutor);
+router.delete('/eliminarLibro/:id', librosController.deleteLibro)
 
 
 module.exports = router;
